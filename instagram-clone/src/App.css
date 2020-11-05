@@ -16,3 +16,14 @@
 .app__headerImage {
   height: 50%;
 }
+
+.app__signup {
+  display: flex;
+  flex-direction: column;
+}
+
+Input {
+  margin: 10px 0;
+  border: none;
+  border-bottom: 1px solid lightgray
+}
