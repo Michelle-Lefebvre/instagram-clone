@@ -12,7 +12,6 @@ function Post({ username, caption, imageUrl, altTxt }) {
                     caption={username}
                     src="/static/images/avatar/MMLlogo.png"
                     alt={altTxt}
-                // src="/static/images/avatar/1.jpg"
                 />
                 <h3>{username}</h3>
             </div>

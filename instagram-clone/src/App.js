@@ -65,7 +65,7 @@ function App() {
 
   useEffect(() => {
     // run once when post refreshes
-    db.collection('posts').onSnapshot(snapshot => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()
@@ -95,6 +95,14 @@ function App() {
 
   return (
     <div className="app">
+
+      {/* ------------------- ImageUpload-making a post -------------------*/}
+      {user?.displayName ? ( //optional chaining
+        <ImageUpload username={user.displayName} />
+      ) : (
+          <h3>Login to upload</h3>
+        )}
+
       {/* ---------------------------- Sign UP ----------------------------*/}
       <Modal
         open={open}
@@ -155,23 +163,22 @@ function App() {
         </div>
       </Modal>
 
-      {/* ------------------- ImageUpload-makinng a post -------------------*/}
-      <ImageUpload />
-
 
       <div className="app__header" >
         <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram word" />
       </div>
 
-      {user ? (
-        <Button onClick={() => auth.signOut()}>Log out</Button>
-      ) : (
-          <div className="app_loginContainer">
-            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-            <Button onClick={() => setOpen(true)}>Sign Up</Button>
-          </div>
+      {
+        user ? (
+          <Button onClick={() => auth.signOut()}>Log out</Button>
+        ) : (
+            <div className="app_loginContainer">
+              <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+              <Button onClick={() => setOpen(true)}>Sign Up</Button>
+            </div>
 
-        )}
+          )
+      }
 
       {
         posts.map(({ id, post }) => (
@@ -179,7 +186,7 @@ function App() {
         ))
       }
 
-    </div>
+    </div >
   );
 }
 
