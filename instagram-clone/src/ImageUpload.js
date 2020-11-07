@@ -3,8 +3,9 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
 import { Button, Input } from '@material-ui/core';
-import { db, auth, storage } from './firebase.js';
+import { db, storage } from './firebase.js';
 import firebase from "firebase";
+import './ImageUpload.css';
 
 function ImageUpload({ username }) {
     const [image, setImage] = useState(null);
@@ -56,8 +57,8 @@ function ImageUpload({ username }) {
     };
 
     return (
-        <div>
-            <progress value={progress} max="100" />
+        <div className="imageupload">
+            <progress className="imageupload__progress" value={progress} max="100" />
             <Input type="text" placeholder="Enter a caption..."
                 onChange={event => setCaption(event.target.value)} value={caption} />
             <Input type="file" onChange={handleChange} />

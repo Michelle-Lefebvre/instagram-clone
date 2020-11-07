@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Post from './Post.js';
@@ -8,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
 import ImageUpload from './ImageUpload';
+import InstagramEmbed from 'react-instagram-embed';
 
 function getModalStyle() {
   const top = 50;
@@ -97,13 +96,6 @@ function App() {
   return (
     <div className="app">
 
-      {/* ------------------- ImageUpload-making a post -------------------*/}
-      {user?.displayName ? ( //optional chaining
-        <ImageUpload username={user.displayName} />
-      ) : (
-          <h3>Login to upload</h3>
-        )}
-
       {/* ---------------------------- Sign UP ----------------------------*/}
       <Modal
         open={open}
@@ -114,19 +106,19 @@ function App() {
             <center>
               <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram word" />
             </center>
-            <input
+            <Input
               placeholder="username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <input
+            <Input
               placeholder="email"
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input
+            <Input
               placeholder="password"
               type="password"
               value={password}
@@ -147,13 +139,13 @@ function App() {
             <center>
               <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram word" />
             </center>
-            <input
+            <Input
               placeholder="email"
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input
+            <Input
               placeholder="password"
               type="password"
               value={password}
@@ -167,26 +159,51 @@ function App() {
 
       <div className="app__header" >
         <img className="app__headerImage" src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="instagram word" />
+
+        {
+          user ? (
+            <Button onClick={() => auth.signOut()}>Log out</Button>
+          ) : (
+              <div className="app_loginContainer">
+                <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+                <Button onClick={() => setOpen(true)}>Sign Up</Button>
+              </div>
+            )
+        }
       </div>
 
-      {
-        user ? (
-          <Button onClick={() => auth.signOut()}>Log out</Button>
-        ) : (
-            <div className="app_loginContainer">
-              <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-              <Button onClick={() => setOpen(true)}>Sign Up</Button>
-            </div>
+      <div className="app__posts" >
+        <div className="app__postsLeft">
+          {
+            posts.map(({ id, post }) => (
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} alt="" />
+            ))
+          }
+        </div>
+        <div className="app__postsRight">
+          <InstagramEmbed
+            url='https://www.instagram.com/p/Bi2RJEqFPRj/'
+            maxWidth={320}
+            hideCaption={false}
+            containerTagName='div'
+            protocol=''
+            injectScript
+            onLoading={() => { }}
+            onSuccess={() => { }}
+            onAfterRender={() => { }}
+            onFailure={() => { }}
+          />
+        </div>
+      </div>
 
+      {/* ------------------- ImageUpload-making a post -------------------*/}
+      {
+        user?.displayName ? ( //optional chaining
+          <ImageUpload username={user.displayName} />
+        ) : (
+            <h3>Login to upload</h3>
           )
       }
-
-      {
-        posts.map(({ id, post }) => (
-          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} alt="" />
-        ))
-      }
-
     </div >
   );
 }

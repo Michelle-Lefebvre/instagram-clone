@@ -10,11 +10,16 @@
   background-color: #fff;
   border-bottom: 1px solid lightgrey;
   padding: 20px;
+  position: sticky;
   object-fit: contain;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
 }
 
 .app__headerImage {
-  height: 50%;
+  object-fit: contain;
 }
 
 .app__signup {
@@ -26,4 +31,14 @@ Input {
   margin: 10px 0;
   border: none;
   border-bottom: 1px solid lightgray
+}
+
+.app__posts {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.app__postsRight {
+  margin-left: 20px;
 }
