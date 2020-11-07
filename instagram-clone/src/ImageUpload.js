@@ -2,8 +2,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
-import { storage, db } from "./firebase";
+import { Button, Input } from '@material-ui/core';
+import { db, auth, storage } from './firebase.js';
+import firebase from "firebase";
 
 function ImageUpload({ username }) {
     const [image, setImage] = useState(null);
@@ -24,15 +25,15 @@ function ImageUpload({ username }) {
         uploadTask.on(
             "state_changed",
             (snapshot) => {
+                // shows visual progress
                 const progress = Math.round(
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100);
                 setProgress(progress);
             },
             (error) => {
                 console.log(error);
-                alert(error.message);
             },
-            () => {
+            () => { // complete function get image url & post in db
                 storage
                     .ref("images")
                     .child(image.name)
@@ -45,7 +46,7 @@ function ImageUpload({ username }) {
                             imageUrl: url,
                             username: username
                         });
-                        // reset
+                        //  reset 
                         setProgress(0);
                         setCaption("")
                         setImage(null);
@@ -57,9 +58,10 @@ function ImageUpload({ username }) {
     return (
         <div>
             <progress value={progress} max="100" />
-            <input type="text" placeholder="Enter a caption..." onchange={event => setCaption(event.target.value)} />
-            <input type="file" onChange={handleChange} />
-            <Button onclick={handleUpload}>Upload</Button>
+            <Input type="text" placeholder="Enter a caption..."
+                onChange={event => setCaption(event.target.value)} value={caption} />
+            <Input type="file" onChange={handleChange} />
+            <Button onClick={handleUpload}>Upload</Button>
 
         </div>
     )

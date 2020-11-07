@@ -88,7 +88,8 @@ function App() {
 
   const signIn = (event => {
     event.preventDefault();
-    auth.signInWithEmailAndPassword(email, password)
+    auth
+      .signInWithEmailAndPassword(email, password)
       .catch((error) => alert(error.message))
     setOpenSignIn(false)
   })
@@ -182,7 +183,7 @@ function App() {
 
       {
         posts.map(({ id, post }) => (
-          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} altTxt={post.altTxt} />
+          <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} alt="" />
         ))
       }
 
