@@ -1,6 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
 import { Button, Input } from '@material-ui/core';
 import { db, storage } from './firebase.js';
@@ -59,7 +56,7 @@ function ImageUpload({ username }) {
     return (
         <div className="imageupload">
             <progress className="imageupload__progress" value={progress} max="100" />
-            <Input type="text" placeholder="Enter a caption..."
+            <Input className="imageupload__text" type="text" placeholder="Enter a caption..."
                 onChange={event => setCaption(event.target.value)} value={caption} />
             <Input type="file" onChange={handleChange} />
             <Button onClick={handleUpload}>Upload</Button>
