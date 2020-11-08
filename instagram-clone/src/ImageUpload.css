@@ -1,13 +1,11 @@
 .imageupload {
     display: flex;
     flex-direction: column;
-    width: 60%;
-    max-width: 500px;
+    max-width: 400px;
     margin: auto;
     padding: 20px 10px;
     background-color: #fff;
     border: 1px solid lightgrey;
-
 }
 
 .imageupload__progress {
